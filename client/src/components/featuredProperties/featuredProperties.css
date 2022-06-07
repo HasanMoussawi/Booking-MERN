@@ -1,0 +1,44 @@
+.fProp{
+    display: flex;
+    width: 100%;
+    max-width: 1024px;
+    justify-content: space-between;
+    gap: 20px;
+    z-index: 1;
+}
+
+.fPropItem{
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    gap:10px;
+    
+}
+
+.fPropImg{
+    width: 100%;
+}
+
+.fPropName{
+    font-weight: 800;
+}
+
+.fPropCity{
+     font-weight: 300;
+}
+
+.fPropPrice{
+    font-weight: 500;
+}
+
+.fPropRating>button{
+    background-color: #003572;
+    color: #fff;
+    border:none;
+    margin-right: 10px;
+    font-weight: 900;
+}
+
+.fPropRating>span{
+    font-style: 14px;
+}
