@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./hotel.css";
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import MailList from "../../components/mailList/MailList.js";
 import Footer from "../../components/footer/Footer.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faCircleArrowLeft, faCircleArrowRight, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Hotel = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [open, setOpen] = useState(false);
+
   const images = [
     {
       src: "https://t-cf.bstatic.com/xdata/images/hotel/max1024x768/134171873.jpg?k=6634177e2a2c454c9ca4609045572e10918a02d1dc9fd0480472a55accf4b5c3&o=&hp=1"
@@ -35,26 +38,53 @@ const Hotel = () => {
     },
   ];
 
+  const handleOpen = (i) => {
+    setOpen(true);
+    setSlideIndex(i);
+  }
+
+  const handleMove = (direction) => {
+    let newSlideIndex;
+    if (direction === "L") {
+      newSlideIndex = slideIndex === 0 ? 5 : slideIndex - 1;
+    } else {
+      newSlideIndex = slideIndex === 5 ? 0 : slideIndex + 1;
+    }
+    setSlideIndex(newSlideIndex);
+  }
 
   return (
     <div>
       <Navbar />
       <Header type="list"/>
       <div className="hotelContainer">
+      { open &&
+        <div className="slider">
+          <FontAwesomeIcon icon={faXmarkCircle} className="iconClose" onClick={()=>setOpen(false)}/>
+          <FontAwesomeIcon icon={faCircleArrowLeft} className="iconArrow" onClick={()=>handleMove("L")}/>
+          <div className="sliderWrapper">
+            <img src={images[slideIndex].src} alt="" className="sliderImg"/>
+          </div>
+          <FontAwesomeIcon icon={faCircleArrowRight} className="iconArrow" onClick={()=>handleMove("R")}/>
+          
+        </div>
+      }
         <div className="hotelWrapper">
+          <button className="bookNow">Reserve or Book Now!</button>
           <h1 className="hotelTitle">Orient Queen Homes Hotel</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot}/>
             <span>John Kennedy Street, Ras Beirut, 1107 Beirut, Lebanon</span>
           </div>
           <span className="hotelDistance">1km - from Airport</span>
-          <span className="hotelPriceHighLight">Book now for $100 and get a free airport taxi</span>
+          <span className="hotelPriceHighlight">Book now for $100 and get a free airport taxi</span>
           <div className="hotelImages">
-            {images.map(image=>(
+            {images.map((image, i) => (
               <div className="hotelImgWrapper">
                 <img src={image.src}
                     alt=""
                     className="hotelImg"
+                    onClick={() => handleOpen(i)}
                 />
               </div>
             ))}
